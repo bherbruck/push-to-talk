@@ -10,7 +10,7 @@ After installation, the app will run at startup and automatically mute your micr
 
 ## 🖱 Usage
 
-Only one key combination is currently supported. Press `Ctrl+Win` to unmute your primary the microphone, it will be otherwise muted.
+Only one key combination is currently supported. Press `Ctrl+Win` to unmute your primary microphone, it will be otherwise muted.
 
 You may have to press the key combination when first joining a meeting to make it mute initially (I think Teams unmutes automatically when joining a meeting).
 
