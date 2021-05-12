@@ -23,6 +23,7 @@ app.on('before-quit', () => {
 
 export let tray: Tray = null
 
+// maybe combine with menu module
 function createTray() {
   tray = new Tray(mutedIcon)
   tray.setToolTip('Push to Talk')
