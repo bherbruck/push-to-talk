@@ -1,6 +1,7 @@
 import { exec } from 'child_process'
 import { app, Menu } from 'electron'
 import { mic } from 'win-audio'
+import { tray } from './main'
 import { store } from './store'
 
 export const menu = Menu.buildFromTemplate([
@@ -23,3 +24,8 @@ export const menu = Menu.buildFromTemplate([
     },
   },
 ])
+
+export function updateMenu(itemIndex: number, text: string) {
+  menu.items[itemIndex].label = text
+  tray.setContextMenu(Menu.buildFromTemplate(menu.items))
+}

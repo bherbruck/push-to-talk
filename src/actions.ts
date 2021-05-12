@@ -2,6 +2,7 @@ import * as iohook from 'iohook'
 import { mic } from 'win-audio'
 import { mutedIcon, unmutedIcon } from './assets'
 import { tray } from './main'
+import { updateMenu } from './menu'
 
 iohook.useRawcode(true)
 iohook.start(false)
@@ -27,4 +28,5 @@ function release() {
 export function register(keys: number[]) {
   iohook.unregisterAllShortcuts()
   iohook.registerShortcut(keys, press, release)
+  updateMenu(0, `Shortcut: ${keys.join('+')}`)
 }
