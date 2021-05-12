@@ -13,7 +13,6 @@ export function create() {
   register(store.get('shortcut') || defaultKeys)
 
   watchFile(store.path, (curr, prev) => {
-    console.log('updated')
     register(store.get('shortcut') as number[])
   })
 }
