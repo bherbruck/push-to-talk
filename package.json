@@ -1,6 +1,6 @@
 {
   "name": "push-to-talk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Global device-level push to talk",
   "main": "build/main.js",
   "author": "bherbruck",
@@ -17,6 +17,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "electron-store": "5.2.0",
     "iohook": "^0.6.6",
     "win-audio": "^2.0.2"
   },
