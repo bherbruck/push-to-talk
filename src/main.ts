@@ -1,7 +1,8 @@
-import { app, Menu, Tray } from 'electron'
-import * as iohook from 'iohook'
-import * as path from 'path'
-import * as audio from 'win-audio'
+import { app, Tray } from 'electron'
+import { mic } from 'win-audio/src'
+import { mutedIcon } from './assets'
+import { menu } from './menu'
+import * as store from './store'
 
 if (!app.requestSingleInstanceLock()) app.quit()
 
@@ -12,56 +13,18 @@ app.setLoginItemSettings({
 
 app.on('ready', () => {
   createTray()
-  register([162, 91])
-  audio.mic.mute()
+  store.create()
+  mic.mute()
 })
 
-iohook.useRawcode(true)
-iohook.start(false)
+app.on('before-quit', () => {
+  mic.unmute()
+})
 
-let tray: Tray = null
-let currentKeys = []
-let isKeyDown = false
-
-const mutedIcon = path.join(__dirname, '../assets/img/muted.png')
-const unmutedIcon = path.join(__dirname, '../assets/img/unmuted.png')
+export let tray: Tray = null
 
 function createTray() {
   tray = new Tray(mutedIcon)
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Exit',
-      type: 'normal',
-      click: () => {
-        audio.mic.unmute()
-        app.quit()
-      },
-    },
-  ])
   tray.setToolTip('Push to Talk')
-  tray.setContextMenu(contextMenu)
-}
-
-function press() {
-  if (!isKeyDown) {
-    console.log('unmute')
-    audio.mic.unmute()
-    tray.setImage(unmutedIcon)
-    isKeyDown = true
-  }
-}
-
-function release() {
-  if (isKeyDown) {
-    console.log('mute')
-    audio.mic.mute()
-    tray.setImage(mutedIcon)
-    isKeyDown = false
-  }
-}
-
-export function register(keys: number[]) {
-  iohook.unregisterShortcut(currentKeys)
-  iohook.registerShortcut(keys, press, release)
-  currentKeys = keys
+  tray.setContextMenu(menu)
 }
